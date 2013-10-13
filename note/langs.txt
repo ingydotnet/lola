@@ -1,0 +1,6 @@
+rb      ruby        gem
+p5      perl        cpanm
+p6      perl6       panda
+js      node        npm
+sh      bash        bpan
+py      python      pip

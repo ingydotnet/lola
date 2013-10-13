@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+#------------------------------------------------------------------------------
+# Lola -- The Local Language Manager
+# Copyright 2013 Ingy döt Net
+#
+#   LOLA_ROOT/shim/lola-shim*
+#
+# This Bash file is the Lola "shim" that execs the desired version of the
+# desired program under the desired environment.
+#------------------------------------------------------------------------------
+
+# This is hardcoded to prevent it being changed unintentionally.
+export LOLA_ROOT="[%LOLA_ROOT%]"
+
+# TODO - Finish shim logic…
+
+exec -a "$command" "$command_path" "$@"
+
+# vim: set sw=2:

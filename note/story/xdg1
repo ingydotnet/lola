@@ -1,0 +1,55 @@
+XDG User Story #1: Day-to-day Perl development
+
+I want to locally install every Perl release, including the latest blead.
+Sometimes I might want to have multiple copies of the same version with
+different configuration options: with/without threads, 32/64 bit are the
+typical variations I tend to use.
+
+I like to install my releases read-only, so I can't possibly install
+modules into them by accident.
+
+When I install distributions, I want them to be installed into an isolated
+INSTALL_BASE local library for any given Perl.  For example, if I'm on
+v5.19.4, I want to have a v5.19.4 local library separate from the standard
+vendor/site libraries.  I name my perls by version and call my library
+"@std", so I usually think of 18.1@std or 19.4@std.
+
+That lets me do the following:
+
+- easily switch to X.Y@std for any given perl to test code on it with
+  whatever I happen to have installed there
+
+- easily switch to perl X.Y *without* a library to test with just core
+  modules as shipped with perl
+
+I'd also like to easily create a temporary library, e.g. 18.1@temp, to try
+installing a module from CPAN against a vanilla perl to see how the
+dependency chain resolves and then blow away @tmp afterwards when I'm done
+testing.
+
+It's important that the @std be specific to perl versions because
+architecture-specific code winds up there and I can't have, say, 14.4 XS
+getting loaded on 18.1 XS.
+
+(It might theoretically be OK to share a library across minor versions, but
+it's just cleaner to have libraries tied to specific perls as it avoids any
+odd dynamic dependency resolution issues based on whatever version of Perl
+happened to install a module.)
+
+----
+== Ingy's thoughts:
+
+I like the idea of making local language installations be immutable. At least
+as an option.
+
+The word 'distributions' threw me off for a bit. We need to stick to a
+standard Lola glossary in stories. See note/glossary.
+
+We'll keep growing this glossary and we can change terms as necessary, as long
+as we stay consistent.
+
+I think pkgsets can be stored by name like this:
+`$LOLA_ROOT/lang/perl5/pkgset/std`. Pkgsets can be joined to form a path:
+
+    lola use 19.4@std:xml
+

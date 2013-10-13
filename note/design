@@ -1,0 +1,61 @@
+== Core Concepts
+
+* Lola depends on 2 environment variables: LOLA_SRC and LOLA_ROOT.
+* LOLA_SRC is the directory containing the Lola repo.
+  * Also contains plugin repos under $LOLA_SRC/plugin/
+  * LOLA_SRC is static content
+  * Upgrading Lola is just (cd $LOLA_SRC; git pull --recurse-submodules)
+  * I(ngy) would set LOLA_SRC to `~/src/lola`
+* LOLA_ROOT is where stuff gets written to or installed
+  * $LOLA_ROOT/conf is the config file
+  * $LOLA_ROOT/lang is where languages get installed
+  * $LOLA_ROOT/bin is where are shims are installed
+  * LOLA_ROOT defaults to $HOME/.lola
+* All the above happens is automated into one startup line:
+  * source /path/to/lola/bin/lola-init
+* Your current directory determines your runtime settings
+  * Including your package (module) settings
+* Per directory settings are kept in ./.lola/
+  * If not found in cwd, traverse back up to / looking for .lola/
+  * Can optionally be stored in $LOLA_ROOT/lola/${PWD//\/:}
+* General command format is:
+  * lola [<lang-id>] <action> <options> <args>
+  * lang-id can be omitted (use one from previous command)
+
+
+
+== Example commands w/ output
+
+> lola ??
+ Lang    Version     Pkg     Root
+ ------------------------------------------
+ bash    3.2.48      @bpan   ~/src/
++perl5   5.18.1      @std    ~/src/yaml-pm/
+ ruby    system      @       ~/
+
+> lola rb?
+Default language is now 'ruby':
++ruby    system      @       ~/
+
+> lola set rb=1.8.3@rails .
+Using ruby 1.8.3@rails under directory ~/src/foo-rb/
+
+> lola rb?
++ruby    1.8.3       @rails  ~/src/foo-rb/
+
+> lola set p5=5.14.2
+Using perl 5.14.2@ in this shell.
+
+> lola plugin find
+Registered Lola Language Plugins:
+  acmeism/lola-bash     enabled
+  acmeism/go
+  acmeism/lola-node     disabled
+  acmeism/lola-perl5    enabled
+  acmeism/lola-perl6    disabled
+  acmeism/lola-python   disabled
+  acmeism/lola-tcl
+
+> lola plugin install acmeism/lola-tcl
+Cloning git://github.com/acmeism/lola-tcl into ~/src/lola/plugin/lola-tcl
+Enabling lola-tcl

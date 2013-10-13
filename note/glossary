@@ -1,0 +1,10 @@
+## This is a glossary of terms used in Lola:
+
+    Term        Perl        Example
+    ------------------------------------
+    runtime                 5.19.4
+    package     dist        Foo-Bar-1.23
+    library     module      Foo/Bar.pm
+    class       package     Foo::Bar
+    pkgset                  @std
+

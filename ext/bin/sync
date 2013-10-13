@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+#------------------------------------------------------------------------------
+# Lola -- The Local Language Manager
+# Copyright 2013 Ingy döt Net
+#
+#   LOLA_ROOT/ext/bin/sync*
+#
+# Lola needs certain external repos. This hack fetches them, puts them next to
+# the lola directory, and symlinks to them.
+#
+# Later we'll switch to using git submodules, but those are hard to keep in
+# sync during rapid development.
+#------------------------------------------------------------------------------
+
+base_url=git@github.com:ingydotnet
+base_dir=../..
+
+for name; do
+  if [ -d $base_dir/$name ]; then
+    echo "(cd $base_dir/$name; git pull --rebase origin master)"
+    (cd $base_dir/$name; git pull --rebase origin master)
+  else
+    echo "git clone $base_url/$name $base_dir/$name"
+    git clone $base_url/$name $base_dir/$name
+  fi
+  echo "ln -fs $base_dir/$name $name"
+  ln -fs $base_dir/$name $name
+done
+
+# vim: set sw=2:

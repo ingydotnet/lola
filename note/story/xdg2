@@ -1,0 +1,16 @@
+XDG User Story #2: Project-specific perl development
+
+I'm working on a project.  When I'm in the project directory, I want to be
+using a particular version of perl.
+
+I want to be able to easily install all my dependencies from a cpanfile
+into a local library and then run my code/test using that library.  For
+example, I might use carton to create a cpanfile.snapshot file with a
+particular set of dependencies installed into local/.
+
+Right now, I have to remember to switch my perlbrew to the right perl and I
+have to run "carton exec $command @args" to have the local library set up
+correctly.  I'd much rather be able to run "perl" or "prove" or
+"bin/app.pl" and have the perl and library automatically set up correctly
+based on some configuration within the directory.
+

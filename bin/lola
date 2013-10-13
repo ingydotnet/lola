@@ -1,0 +1,34 @@
+#!/bin/bash -e
+
+#------------------------------------------------------------------------------
+# Lola -- The Local Language Manager
+# Copyright 2013 Ingy döt Net
+#
+#   LOLA_ROOT/shim/lola-shim*
+#
+# This is NOT the real lola command. It is here to catch a bad setup.
+#
+# The `lola` command is a shell function, that is created by `lola-init`. So
+# the fact that we ended up here, means that the user ran the `lola` command in
+# a shell where `lola-init` had not been run. Usually that happens at startup,
+# so this means that Lola has not been properly setup.
+#
+# We'll take this opportunity to explain to the user how to fix things.
+#------------------------------------------------------------------------------
+
+# Get absolute path of lola bin directory:
+srcpath=$(cd ${BASH_SOURCE[0]%/bin/*}; echo $PWD)
+libpath="$srcpath/lib"
+
+# Write out error message.
+cat <<... >&2
+Error: Lola environment not properly setup.
+
+...
+
+# Print instructions about how to setup Lola:
+source "$libpath/lola-init-message.bash"
+
+exit 1
+
+# vim: set sw=2:

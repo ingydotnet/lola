@@ -1,0 +1,25 @@
+XDG User Story #4: Command line app deployment
+
+I want to deploy some command line applications to a server for use
+by an administrator over ssh.
+
+Using my configuration management tools, I install my desired perl binary
+into /opt/perl/v5.18.1, owned by root and read-only.
+
+I create an admin user "toor".  I want to /opt/perl/v5.18.1 to be toor's
+default Perl.  I want to install some CPAN App::* modules into a local
+library in /home/toor.  Commands issued over SSH need to find those App::*
+scripts in the path and run them with the correct perl and library.
+
+I have some private command line applications that I install into
+/opt/bigcli from a git repository.  I want to choose which perl gets used
+for bigcli.  I install dependencies (possibly frozen with Carton) into
+/opt/bigcli/local.  I want "toor" to be able to run /opt/bigcli/bin/bigcli
+and have it use the right perl and the /opt/bigcli/local libraries.
+
+The toor user might need to run bigcli from a cron job or other script.
+Those also need to use the right perl and libraries.
+
+In all these cases, the CWD would not necessarily be either toor's $HOME
+or /opt/bigcli.  The commands need to work from any CWD.
+

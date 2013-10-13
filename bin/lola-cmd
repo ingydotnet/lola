@@ -1,0 +1,43 @@
+#!/bin/bash -e
+
+#------------------------------------------------------------------------------
+# Lola -- The Local Language Manager
+# Copyright 2013 Ingy döt Net
+#
+#   LOLA_SRC/bin/lola-cmd*
+#
+# The main purpose of this executable file is to make sure we are running under
+# Bash. This gets called by the lola() function, which could be under any shell
+# (at least Bash or Zsh). This file sets the path and then calls lola.bash to
+# do the actual work.
+#------------------------------------------------------------------------------
+
+die() { echo "$@"; exit 1; }
+Lola:main() {
+  # Set debugging early
+  [ "${LOLA_DEBUG:=false}" == false ] || LOLA_DEBUG=true
+  for arg; do
+    case "$arg" in
+    --debug)    LOLA_DEBUG=true; break;;
+    --no-debug) LOLA_DEBUG=false; break ;;
+    --) break ;;
+    esac
+  done
+
+  # Add the Lola bin/lib and and the ext bin/lib dirs to PATH:
+  PATH="$(
+    shopt -s nullglob
+    set -- \
+      $LOLA_SRC/{bin,lib} \
+      $LOLA_SRC/ext/*/{bin,lib}
+      $LOLA_SRC/plugin/*/{bin,lib}
+    IFS=':'; echo "$*"
+  ):$PATH"
+
+  # Load/run the actual Lola command processing library:
+  source lola.bash "$@"
+}
+
+Lola:main "$@"
+
+# vim: set sw=2:

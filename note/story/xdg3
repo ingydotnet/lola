@@ -1,0 +1,24 @@
+XDG User Story #3: Application deployment
+
+I want to deploy a web application to a web server.
+
+Using my configuration management tools, I install my desired perl binary
+into /opt/perl/v5.18.1, owned by root and read-only.
+
+Using git, I clone my application repository into /opt/myapp.  The
+application contains a cpanfile.snapshot for use with carton.  I use carton
+to install dependencies into the local/ directory.
+
+I need to create an init.d script that runs the application as the "myapp"
+user using the /opt/perl/v5.18.1 I've installed and the local/ library
+within /opt/myapp.
+
+The application includes some scripts to be run regularly by the "myapp"
+user's crontab.  The cron jobs need to run the scripts using the same perl
+and local/ library that the application runs.
+
+If I have another application (or a later version of "myapp" that I'm
+testing), I want to install it similarly into /opt/otherapp and run it and
+any associated jobs as the "otherapp" user.  It might use the same
+/opt/perl/v5.18.1 perl or a different one.
+

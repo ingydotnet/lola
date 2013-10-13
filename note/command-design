@@ -1,0 +1,36 @@
+== help
+# Show general help, full doc, or specific command doc
+# Needs to be pluggable
+> lola -h
+> lola
+> lola help
+> lola help install
+> lola rb help install
+
+== info
+# Show current info. Per lang. Per directory. Per shell.
+> lola info
+> lola ?
+> lola rb ?
+> lola rb p5 ? ..
+
+== install
+# Install a runtime for a language.
+> lola install perl-5.14.0 =14.0
+
+== set
+> lola set p5=14.0@std:dz
+
+== pkg
+> lola rb@devel pkg install pry pry-debugger
+
+== config
+> lola config perl5.enable true
+
+== plugin
+> lola plugin find
+> lola plugin install lola-lang-go
+
+== run
+> lola run p5=14.0@std perl …
+
