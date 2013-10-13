@@ -1,0 +1,55 @@
+### as root
+apt-get update
+adduser ingy
+addgroup admin
+adduser ingy admin
+
+### as ingy
+adduser xdg
+tmux -S /tmp/pairup
+chmod 777 /tmp/pairup
+sudo apt-get install git build-essential exuberant-ctags
+git clone git://github.com/ingydotnet/....git
+vim .../conf
+.../... update
+.../... install
+
+### lola
+mkcd src
+git clone git@github.com:ingydotnet/lola
+cd lola/
+make test
+
+### lola command ideas:
+lola set p5=5.10.0 ..
+lola runtime p5 system /usr/bin/perl
+lola runtime p5 alias system /usr/bin/perl
+lola runtime p5 alias 18.0-thread /opt/perl/18.0-thread
+lola set p5 18.0-thread
+lola install p5 18.1
+lola p5 install perl-5.18.1=18.1
+lola p5 alias /opt/perl/18.0-thread=18.0
+lola set p5=18.0@std:dz
+perlbrew install perl-5.18.1 --as 18.1
+~/perl5/perlbrew/perl/18.1
+lola p5 install 18.1
+lola p5 pkgset std
+lola p5 pkgset local=./local
+lola set p5=18.1@std:local
+cpanm -l local --installdeps .
+perl bin/myapp
+lola run perl ...
+local p5 cpanm -l @std Foo::Bar
+lola p5 cpanm -l @std Foo::Bar
+lola p5=18.1@std cpanm Foo::Bar
+lola p5=18.1@std:local cpanm Foo::Bar
+PERL_MM_OPT=INSTALL_BASE=./local PERL_MB_OPT=--install_base=./local cpanm Foo::Bar
+lola set p5=18.1@std:local
+lola p5 pkgset local=./local_18_1
+lola p5 pkgset std
+lola set p5=18.1@std:test
+lola p5 pkgset company=/opt/yoyodyne/install_base
+lola set p5=18.1@std:company
+lola set p5=18.1@std:@company:./local
+lola set p5=18.1:@std:@company:./local
+lola set p5=18.1+@std:@company:./local
