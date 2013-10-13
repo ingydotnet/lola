@@ -1,5 +1,6 @@
 ### as root
 apt-get update
+apt-get install git build-essential exuberant-ctags
 adduser ingy
 addgroup admin
 adduser ingy admin
@@ -8,7 +9,6 @@ adduser ingy admin
 adduser xdg
 tmux -S /tmp/pairup
 chmod 777 /tmp/pairup
-sudo apt-get install git build-essential exuberant-ctags
 git clone git://github.com/ingydotnet/....git
 vim .../conf
 .../... update
