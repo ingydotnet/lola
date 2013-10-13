@@ -1,5 +1,3 @@
-#!/bin/sh
-
 #------------------------------------------------------------------------------
 # Lola -- The Local Language Manager
 # Copyright 2013 Ingy döt Net
@@ -22,6 +20,17 @@
 #
 # XXX Only Bash is supported in this extremely early stage of development.
 #------------------------------------------------------------------------------
+
+LOLA_OK=true
+if [ -n "$BASH_SOURCE" ]; then
+  if [ "$0" == "${BASH_SOURCE[0]}" ]; then
+    echo "Don't *run* lola-init, *source* it." >&2
+    exit 1
+  fi
+else
+  echo "Lola ony supports Bash at this time. Patches welcome!" >&2
+  LOLA_OK=false
+fi
 
 lola-init:main() {
   # Get absolute path of lola source code directory, make sure it checks out,
@@ -89,6 +98,8 @@ lola-init:main() {
     # If command OK and ENV file exists, then source it into out shell:
     if [ $rc -eq 0 ]; then
       if [ -e "$lola_env_file" ]; then
+        # WARNING This is effectively an 'eval' so we need to think about the
+        # security implications.
         source "$lola_env_file"
         rm -f "$lola_env_file"
       fi
@@ -99,6 +110,8 @@ lola-init:main() {
   }
 }
 
-lola-init:main
+$LOLA_OK && lola-init:main
 
-# vim: set sw=2:
+unset LOLA_OK
+
+# vim: set sw=2 ft=sh:
