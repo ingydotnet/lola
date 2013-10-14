@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
 Lola:shim-maker() {
   shim=$(< "$LOLA_SRC/template/shim")
   shim="${shim/%%VERSION%%/$Lola_VERSION}"
@@ -11,5 +9,3 @@ Lola:shim-maker() {
 }
 
 Lola:shim-maker "$@"
-
-# vim: set sw=2:

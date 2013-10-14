@@ -12,7 +12,6 @@
 # do the actual work.
 #------------------------------------------------------------------------------
 
-die() { echo "$@"; exit 1; }
 Lola:main() {
   # Set debugging early
   [ "${LOLA_DEBUG:=false}" == false ] || LOLA_DEBUG=true
@@ -39,5 +38,4 @@ Lola:main() {
 }
 
 Lola:main "$@"
-
 # vim: set sw=2:

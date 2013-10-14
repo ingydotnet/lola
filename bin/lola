@@ -27,8 +27,7 @@ Error: Lola environment not properly setup.
 ...
 
 # Print instructions about how to setup Lola:
-source "$libpath/lola-init-message.bash"
+source "$libpath/msg-init.bash"
 
 exit 1
-
 # vim: set sw=2:

@@ -1,5 +1,3 @@
-#!/bin/bash -e
-
 #------------------------------------------------------------------------------
 # Lola -- The Local Language Manager
 # Copyright 2013 Ingy döt Net
@@ -18,11 +16,16 @@ bpan:include bpan/std
 Lola:main() {
   say Run Lola Run!
 
-#   Lola:get-options "$@"
-#   Lola:run-command
+  Lola:get-options "$@"
+  Lola:run-command
 }
 
 Lola:get-options() {
+  :
+}
+
+Lola:run-command() {
+  :
 }
 
 Lola:main "$@"

@@ -1,3 +1,4 @@
+#!/bin/sh
 #------------------------------------------------------------------------------
 # Lola -- The Local Language Manager
 # Copyright 2013 Ingy döt Net
@@ -29,63 +30,39 @@ if [ -n "$BASH_SOURCE" ]; then
   fi
 else
   echo "Lola ony supports Bash at this time. Patches welcome!" >&2
-  LOLA_OK=false
+  unset LOLA_OK
 fi
 
-lola-init:main() {
+lola_init_main() {
+  unset LOLA_OK
   # Get absolute path of lola source code directory, make sure it checks out,
   # then export it. This is the value that everything keys off of:
-  if [ -n "$BASH_SOURCE" ]; then
-    if [ "$0" == "${BASH_SOURCE[0]}" ]; then
-      echo "Don't *run* lola-init, *source* it." >&2
-      return 1
-    fi
-    local src="${BASH_SOURCE[0]}"
-    [ $src == 'lola-init' ] && src='./lola-init'
-    LOLA_SRC="$(cd ${src%/bin/*}; echo $PWD)"
-  else
-    echo "Lola ony supports Bash at this time. Patches welcome!" >&2
+  if [ "$0" == "${BASH_SOURCE[0]}" ]; then
+    echo "Don't *run* lola-init, *source* it." >&2
     return 1
   fi
+  local src="${BASH_SOURCE[0]}"
+  if [ "$src" == 'bin/lola-init' ]; then
+    src=./bin/lola-init
+  fi
+  if [[ ! "$src" =~ /bin/lola-init$ ]]; then
+    echo "Invalid path "$src" for lola-init"
+    return 1
+  fi
+  local lola_src="$(cd ${src%/bin/lola-init}; echo $PWD)"
   # Sanity check
-  if [ ! -e "$LOLA_SRC/bin/lola" ]; then
-    echo "Invalid path for LOLA_SRC='$LOLA_SRC'" >&2
+  if [ ! -e "$lola_src/lib/lola.bash" ]; then
+    echo "Invalid path for LOLA_SRC='$lola_src'" >&2
     return 1
   fi
-  export LOLA_SRC
+  export LOLA_SRC="$lola_src"
 
   # We also need LOLA_ROOT. If the user did not set their own, we use
-  # $HOME/.lola/ as the default. This is a good time to create the dir if it
-  # doesn't exist.
-  if [ -z "$LOLA_ROOT" ]; then
-    LOLA_ROOT="$HOME/.lola"
-  fi
-  export LOLA_ROOT
-  if [ ! -d "$LOLA_ROOT" ]; then
-    echo "Creating LOLA_ROOT: mkdir $LOLA_ROOT"
-    mkdir -p "$LOLA_ROOT/tmp"
-  fi
+  # $HOME/.lola/ as the default:
+  export LOLA_ROOT="${LOLA_ROOT:="$HOME/.lola"}"
 
-  # Define the actual main `lola` command as a shell function
+  # Define the actual main `lola` command as a shell function:
   lola() {
-    # Sanity check SRC and ROOT. They may no longer be set.
-    if [ -z "$LOLA_SRC" ]; then
-      echo "Error: LOLA_SRC is not set for some reason." >&2
-      return 1
-    fi
-    if [ ! -e "$LOLA_SRC/bin/lola-cmd" ]; then
-      echo "Invalid directory for LOLA_SRC='$LOLA_SRC'." >&2
-      return 1
-    fi
-    if [ -z "$LOLA_ROOT" ]; then
-      echo "Error: LOLA_ROOT is not set for some reason." >&2
-      return 1
-    fi
-    if [ ! -d "$LOLA_ROOT/tmp" ]; then
-      echo "Invalid directory for LOLA_ROOT='$LOLA_ROOT'." >&2
-      return 1
-    fi
-
     # Set up a file for Lola to put shell specific settings in:
     lola_env_file="$LOLA_ROOT/tmp/lola-env-$$"
     # Make sure it isn't a leftover.
@@ -95,7 +72,7 @@ lola-init:main() {
     "$LOLA_SRC/bin/lola-cmd" "$@"
     local rc=$?
 
-    # If command OK and ENV file exists, then source it into out shell:
+    # If command OK and ENV file exists, then source it into our shell:
     if [ $rc -eq 0 ]; then
       if [ -e "$lola_env_file" ]; then
         # WARNING This is effectively an 'eval' so we need to think about the
@@ -110,8 +87,5 @@ lola-init:main() {
   }
 }
 
-$LOLA_OK && lola-init:main
-
-unset LOLA_OK
-
+[ -n "$LOLA_OK" ] && lola_init_main "$@"
 # vim: set sw=2 ft=sh:
