@@ -48,7 +48,7 @@ lola_init_main() {
     echo "Invalid path "$src" for lola-init"
     return 1
   fi
-  local lola_src="$(cd ${src%/bin/lola-init}; echo $PWD)"
+  local lola_src="$(builtin cd ${src%/bin/lola-init}; echo $PWD)"
   # Sanity check
   if [ ! -e "$lola_src/lib/lola.bash" ]; then
     echo "Invalid path for LOLA_SRC='$lola_src'" >&2
@@ -62,6 +62,11 @@ lola_init_main() {
 
   # Define the actual main `lola` command as a shell function:
   lola() {
+    # Are we running interactive?
+    local lola_interactive=
+    [[ $- =~ i ]] && lola_interactive=true || lola_interactive=false
+    export lola_interactive
+
     # Set up a file for Lola to put shell specific settings in:
     lola_env_file="$LOLA_ROOT/tmp/lola-env-$$"
     # Make sure it isn't a leftover.

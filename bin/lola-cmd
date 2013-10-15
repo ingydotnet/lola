@@ -22,13 +22,14 @@ Lola:main() {
     --) break ;;
     esac
   done
+  $LOLA_DEBUG && set -x
 
   # Add the Lola bin/lib and and the ext bin/lib dirs to PATH:
   PATH="$(
     shopt -s nullglob
     set -- \
       $LOLA_SRC/{bin,lib} \
-      $LOLA_SRC/ext/*/{bin,lib}
+      $LOLA_SRC/ext/*/{bin,lib} \
       $LOLA_SRC/plugin/*/{bin,lib}
     IFS=':'; echo "$*"
   ):$PATH"
