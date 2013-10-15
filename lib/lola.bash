@@ -14,14 +14,31 @@ source bpan
 bpan:include bpan/std
 
 Lola:main() {
-  say Run Lola Run!
-
+  local \
+    lids= \
+    lids=cmd= lid= args=() \
+    lola_debug=false lola_verbose=false lola_quiet=false lola_i=false
+  Lola:assert-env || return $?
+  Lola:get-lids
   Lola:get-options "$@"
   Lola:run-command
 }
 
+Lola:assert-env() {
+  say okkkk
+}
+
+Lola:get-lids() {
+:
+}
+
 Lola:get-options() {
-  :
+  for arg; do
+    case "$arg" in
+    --) break;;
+    esac
+  done
+  args=("$@")
 }
 
 Lola:run-command() {

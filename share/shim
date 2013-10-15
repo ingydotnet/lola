@@ -1,10 +1,11 @@
 #!/bin/bash -e
+XXX     This is template for the main runtime shim
 
 #------------------------------------------------------------------------------
 # Lola -- The Local Language Manager
 # Copyright 2013 Ingy döt Net
 #
-#   LOLA_ROOT/shim/lola-shim*
+#   LOLA_ROOT/shim/lola-runtime-shim*
 #
 # This Bash file is the Lola "shim" that execs the desired version of the
 # desired program under the desired environment.
@@ -14,6 +15,10 @@
 export LOLA_ROOT="[%LOLA_ROOT%]"
 
 # TODO - Finish shim logic…
+
+# XXX
+command=perl
+command_path=/usr/bin/perl
 
 exec -a "$command" "$command_path" "$@"
 

@@ -5,6 +5,9 @@
 
 source 'test/setup.bash'
 
+[ -n "$LOLA_TEST_ALL" ] ||
+  plan skip_all 'This test is too slow. Set LOLA_TEST_ALL=1 to run.'
+
 plan tests 1
 
 rm -fr hardlink

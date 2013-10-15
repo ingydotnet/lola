@@ -1,6 +1,6 @@
 .PHONY: default help test external
 
-EXT_UP_TO_DATE=ext/0.0.1
+EXT_UP_TO_DATE=ext/0.0.2
 PLUGIN_UP_TO_DATE=plugin/0.0.1
 
 default:
