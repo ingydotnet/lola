@@ -1,6 +1,6 @@
 source ext/bpan-bash/bin/bpan
 
-for f in include find_inc die err err-; do
+for f in include includable die err err-; do
     bpan:fcopy bpan:$f $f
 done
 

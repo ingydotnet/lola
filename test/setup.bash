@@ -1,6 +1,6 @@
 set -e
 
-INC="$(set -- $PWD/ext/*/{bin,lib} IFS=':'; echo "$*")"
+BPAN_PATH="$(set -- $PWD/ext/*/{bin,lib} IFS=':'; echo "$*")"
 PATH="$PWD/ext/bpan-bash/bin:$PATH"
 
 source lib/std.bash
