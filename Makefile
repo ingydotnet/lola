@@ -1,29 +1,22 @@
-.PHONY: default help test external
+.PHONY: doc test
 
 EXT_UP_TO_DATE=ext/0.0.2
 PLUGIN_UP_TO_DATE=plugin/0.0.1
 
-default:
-	help
+default: help
 
 help:
 	@echo 'Makefile targets:'
 	@echo ''
 	@echo '  test       - Run tests'
-	@echo '  externals  - Get external repos'
 	@echo ''
 
 test: $(EXT_UP_TO_DATE) $(PLUGIN_UP_TO_DATE)
 	prove $(PROVEOPT) test/
 
-external:
-	@make -C ext update
-	@make -C plugin update
+update: doc
 
-$(EXT_UP_TO_DATE):
-	@make -C ext update
-	touch $@
+doc: ReadMe.pod
 
-$(PLUGIN_UP_TO_DATE):
-	@make -C plugin update
-	touch $@
+ReadMe.pod: doc/Lola.swim
+	swim --to=pod --wrap=1 --complete=1 $< > $@
