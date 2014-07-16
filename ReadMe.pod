@@ -12,26 +12,32 @@ Lola - The Local-Language Environment Manager
 
 =head1 Synopsis
 
-    $ lola set py=2.5.6         # Use Python 2.5.6 for this shell session
-    $ lola set p5=5.14.0 .      # Use Perl 5.14.0 under this directory
-    $ lola set rb=1.9 ~         # Use Ruby 1.9 when run under $HOME
     $ lola help                 # Get lola command help
-    $ lola ??                   # Show info for all languages
-    $ lola p5                   # Set Perl5 as default language for commands
-    $ lola ?                    # Show info for current language (Perl5)
-    $ lola install 5.18.1       # Install Perl 5.18.1
+    $ lola js v0.10.24 -g       # Use Node.js v0.10.24 as the global default
+    $ lola py 2.5.6             # Use Python 2.5.6 for this shell session
+    $ lola pl 5.14.0 .          # Use Perl 5.14.0 under this directory
+    $ lola rb 1.9 ~             # Use Ruby 1.9 when run under $HOME
+    $ lola show pl              # Show info for Perl5
+    $ lola show --all           # Show info for all languages
+    $ lola install pl 5.18.1    # Install Perl 5.18.1
 
 =head1 Description
 
-Lola is a generic "Lo"cal "la"nguage environment manager. It lets you:
+Lola is a generic B<Lo>cal B<la>nguage environment manager. It lets you:
 
 =over
 
-=item * Install Bash, Node, Perl(5 & 6), Python(2 & 3), Ruby and many more
+=item * Install Bash, Node.js, Perl(5 & 6), Python(2 & 3), Ruby and many more
 
 =item * Install programming languages locally (per user, under $HOME, no sudo)
 
 =item * Install multiple runtimes (versions) of each programming language
+
+=over
+
+=item * Use fast binary installs where possible
+
+=back
 
 =item * Switch between language runtimes easily
 
@@ -81,9 +87,10 @@ and then telling your shell where it is. For example:
 
     git clone git@github.com:acmeism/lola ~/src/lola
 
-Add a line like this to your shell startup file (Like ~/.bashrc for Bash):
+Then simply add the C<lib> and C<man> directories to your PATH and MANPATH:
 
-    . ~/src/lola/bin/lola-init
+    export PATH=/path/to/lola/lib:"$PATH"
+    export MANPATH=/path/to/lola/man:"$MANPATH"
 
 All your languages and packages get installed in the directory in the
 LOLA_ROOT variable. The default is LOLA_ROOT=~/.lola but you can override it,
@@ -91,8 +98,9 @@ by using a startup line like this:
 
     LOLA_ROOT=/path/lola/root . ~/src/lola/bin/lola-init
 
-Warning: Once you start installing languages, you can't easily move the
-LOLA_ROOT directory, so choose it wisely. See Configuration below.
+Warning: Once you start installing languages, you may not be able to easily
+move the LOLA_ROOT directory. This is because many languages build binaries
+that are targeted at their install location. See Configuration below.
 
 =head1 Prerequisites
 
@@ -102,7 +110,8 @@ LOLA_ROOT directory, so choose it wisely. See Configuration below.
 
 Lola is written entirely in Bash, and uses C</bin/bash> (since it manages
 local Bash versions too). Modern Bash is 4.2+ but MacOSX still clings to 3.2
-so we use that. (Works fine under other shells like C<zsh>).
+so we use that. Note that although Lola is written in Bash, it still runs fine
+under other shells like C<zsh>).
 
 =item C<build-essential>
 
@@ -146,7 +155,7 @@ This is effectively the same as:
 
     (
       cd $LOLA_SRC
-      git pull --recurse-submodules origin master
+      git pull origin master
       lola update
     )
 
