@@ -1,8 +1,9 @@
 set -e
 
-BPAN_PATH="$(set -- $PWD/ext/*/{bin,lib} IFS=':'; echo "$*")"
-PATH="$PWD/ext/bpan-bash/bin:$PATH"
+BPANLIB="$(set -- $PWD/ext/*/{bin,lib} IFS=':'; echo "$*")"
+PATH="$BPANLIB:$PATH"
 
+source bpan
 source lib/std.bash
 include 'test/more'
 export TEST_TAP_BAIL_OUT_ON_ERROR=1
