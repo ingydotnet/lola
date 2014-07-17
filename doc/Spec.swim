@@ -1,0 +1,58 @@
+= Lola Specification
+
+Lola is the "*Lo*cal-*La*nguage Environment Manager". This is a working
+specification and design document.
+
+= Goals
+
+* Lola is essentially plenv for all programming languages.
+* Lola also deals with packages (modules/libraries) in a like manner.
+* Lola (the core) is written entirely in Bash.
+  * It /can/ invoke components written in other languages.
+* Lola is based on the *shim* architecture.
+  * Every binary has a shim script that proxies to a real binary.
+* Lola environments are based on:
+  * Shell specific settings
+  * Cwd settings
+  * Global settings
+* Lola can build language runtimes and packages from source
+  * Binary installs will be supported as possible
+
+Some more thoughts on these goals.
+
+`plenv` (and its shim style) has proven to be more reliable than `perlbrew`.
+`plenv` is a direct copy of `rbenv` and that has shown to be usable in many
+languages. Lola takes this to a natural conclusion of one tool for managing
+locally installed languages in a consistent manner.
+
+People use separate tools for managing packages. Perlbrew + locallib, NVM +
+NPM, etc. The management of both share the same concerns. Combining them can
+multiply the power of a such a tool. For instance:
+
+  lola run p5=5.18.1 pkg=dzil make test
+
+Lola stores settings in 3 places: environment variables, `.lola` directories,
+and the $LOLA_ROOT directory. Shims look in those places in that order. The
+`.lola` directory search starts with $PWD and works towards `/`. Things in
+`LOLA_ROOT` are considered *global* settings.
+
+Packages get installed under LOLA_ROOT into named /pkg-sets/ and the current
+pkg-set for a language is set in the same ways as the current language
+runtime.
+
+= Project Bootstrapping
+
+Interested people should convene in IRC on irc.freenode.net#locallang.
+
+Existing projects to look at and borrow ideas from are:
+
+* https://github.com/sstephenson/rbenv
+* https://github.com/tokuhirom/plenv
+* https://github.com/ingydotnet/git-hub
+
+We should pick a language to start with, based on the people involved and
+their expertise. Perl and/or Ruby seem like decent candidates. We should
+probably co-opt the language installer components outright, as these might be
+the more difficult parts. Also the package installers like `cpanm` should
+probably always be wrapped, as they are highly language specific. We just want
+to introduce the concept of swappable pkg-sets.

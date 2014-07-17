@@ -16,7 +16,10 @@ test: $(EXT_UP_TO_DATE) $(PLUGIN_UP_TO_DATE)
 
 update: doc
 
-doc: ReadMe.pod
+doc: ReadMe.pod Spec.pod
 
 ReadMe.pod: doc/Lola.swim
+	swim --to=pod --wrap=1 --complete=1 $< > $@
+
+%.pod: doc/%.swim
 	swim --to=pod --wrap=1 --complete=1 $< > $@
