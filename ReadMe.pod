@@ -186,7 +186,7 @@ suported. Common command terms have alias symbols. You can even use the C<lola-
 shell> for interactive usage. Or, you can script lola commands with explicit
 arguments for readability.
 
-=head2 Command options and arguments
+=head1 Command options and arguments
 
 The following options and common arguments apply to many commands:
 
@@ -219,7 +219,7 @@ A named set of installed/available packages.
 
 =back
 
-=head2 Common Commands
+=head1 Common Commands
 
 =over
 
@@ -289,7 +289,7 @@ rebuilds anything necessary, including the shim files.
 
 =back
 
-=head2 Plugin Commands
+=head1 Plugin Commands
 
 =over
 
@@ -315,7 +315,7 @@ Remove a given plugin altogether.
 
 =back
 
-=head2 Config Commands
+=head1 Config Commands
 
 =over
 
@@ -333,7 +333,7 @@ Set a config key to a value.
 
 =back
 
-=head2 Prior Art
+=head1 Prior Art
 
 Lola is heavily inspired by many local language installers that came before
 it, including L<rbenv>, L<PerlBrew> and L<NVM>. These tools all have their
@@ -342,5 +342,17 @@ strengths and weaknesses.
 Lola attempts to improve on all of these, and offer the same consistent set of
 features to all languages at once. Using the simple plugin system, new
 languages can easily be added.
+
+=head1 See Also
+
+=over
+
+=item * L<Specification|https://github.com/ingydotnet/lola/blob/master/Spec.pod>
+
+=item * L<https://github.com/sstephenson/rbenv>
+
+=item * L<https://github.com/tokuhirom/plenv>
+
+=back
 
 =cut

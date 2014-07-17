@@ -153,7 +153,7 @@ suported. Common command terms have alias symbols. You can even use the
 `lola-shell` for interactive usage. Or, you can script lola commands with
 explicit arguments for readability.
 
-== Command options and arguments
+= Command options and arguments
 
 The following options and common arguments apply to many commands:
 
@@ -176,7 +176,7 @@ The following options and common arguments apply to many commands:
 
   A named set of installed/available packages.
 
-== Common Commands
+= Common Commands
 
 - `lola`
 
@@ -234,7 +234,7 @@ You can create, manage and use named sets of installed packages.
   Make everything in Lola up-to-date internally. Checks your configuration, and
   rebuilds anything necessary, including the shim files.
 
-== Plugin Commands
+= Plugin Commands
 
 - `lola plugin`
 
@@ -256,7 +256,7 @@ You can create, manage and use named sets of installed packages.
 
   Remove a given plugin altogether.
 
-== Config Commands
+= Config Commands
 
 - `lola config`
 
@@ -270,7 +270,7 @@ You can create, manage and use named sets of installed packages.
 
   Set a config key to a value.
 
-== Prior Art
+= Prior Art
 
 Lola is heavily inspired by many local language installers that came before it,
 including [rbenv], [PerlBrew] and [NVM]. These tools all have their strengths
@@ -279,3 +279,9 @@ and weaknesses.
 Lola attempts to improve on all of these, and offer the same consistent set of
 features to all languages at once. Using the simple plugin system, new
 languages can easily be added.
+
+= See Also
+
+* "Specification"[https://github.com/ingydotnet/lola/blob/master/Spec.pod]
+* https://github.com/sstephenson/rbenv
+* https://github.com/tokuhirom/plenv
