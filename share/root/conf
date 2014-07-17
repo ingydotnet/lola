@@ -1,0 +1,15 @@
+[lang "bash"]
+	enabled = true
+
+[lang "perl"]
+	enabled = true
+
+[lang "ruby"]
+	enabled = true
+
+[alias "lang"]
+        p5 = perl5
+        rb = ruby
+
+[alias "cmd"]
+        info = ?

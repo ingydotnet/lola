@@ -1,0 +1,32 @@
+== bpan-bash
+- bpan:include uses BPAN_PATH instead of PATH
+
+== lola.bash
+- Write getopt code
+- Design plugin API
+  - Write plugin caller code for lola.bash
+- say/nat/log
+- Design Lola configuration
+  - Use git config
+
+== lola-rebuild
+- First-time setup
+  - use rsync
+  - setup by version
+  - install shim
+
+- Design LOLA_ROOT layout
+
+== plugin/lola-perl/lib/
+    - Write runtime installer for perl
+
+== test
+- mockup runtime installs
+  - make fake perl* ruby* etc from bash scripts
+
+- Test on OSX
+- Review plenv (esp shim)
+  - Keep track of rbenv design flaws
+
+- Write story tests
+- Write ingy stories
