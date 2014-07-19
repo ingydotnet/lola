@@ -15,9 +15,15 @@ specification and design document.
 
 =over
 
-=item * Lola is essentially plenv for all programming languages.
+=item * Lola is essentially rbenv/perlbrew for all programming languages.
 
 =item * Lola also deals with packages (modules/libraries) in a like manner.
+
+=over
+
+=item * Lola calls the best existing tools in each language for this.
+
+=back
 
 =item * Lola (the core) is written entirely in Bash.
 
@@ -27,11 +33,21 @@ specification and design document.
 
 =back
 
-=item * Lola is based on the B<shim> architecture.
+=item * Lola supports a B<shim> architecture.
 
 =over
 
 =item * Every binary has a shim script that proxies to a real binary.
+
+=item * Useful for assigning a Lola setup to a directory.
+
+=back
+
+=item * Lola also supports an environment variable based architecture.
+
+=over
+
+=item * Useful for assigning a Lola setup to a shell.
 
 =back
 
@@ -47,13 +63,15 @@ specification and design document.
 
 =back
 
-=item * Lola can build language runtimes and packages from source
+=item * Lola can build language runtimes and packages from source.
 
 =over
 
-=item * Binary installs will be supported as possible
+=item * Binary installs will be supported as possible.
 
 =back
+
+=item * Ease exposure to new languages by having a clean abstraction of language and package installation.
 
 =back
 
@@ -101,5 +119,91 @@ probably co-opt the language installer components outright, as these might be
 the more difficult parts. Also the package installers like C<cpanm> should
 probably always be wrapped, as they are highly language specific. We just want
 to introduce the concept of swappable pkg-sets.
+
+=head1 Commands
+
+I'll start by making a list of commands that should be available. Probably
+best to write them out in a long-hand syntax, then work in a nice alias
+syntax later.
+
+=over
+
+=item C<< lola use --lang=perl5 [--shell | --target=<dir> | --global] <version> >>
+
+This is maybe the most common command. It switches the current language
+version/binary that is in use. There are different contexts for this:
+
+=over
+
+=item * The current shell. The C<--shell> option should probably be the default. This approach just changes environment variables. This means that only the C<PATH> and C<PERL5LIB> environment variables would be updated.
+
+=item * A target directory. This would create a file called C<.lola/perl5> under the target directory, and then all the commands run under the directory would use that Perl. This relies on binary I<shims> rather than environment. The shims themselves live in the C<LOLA_ROOT> directory. The shims are the same for all versions of a program. They merely look for C<.lola/perl5> files to DTRT.
+
+=item * A global default. Shims that find no C<.lola/perl5> file can look at C<$LOLA_ROOT/lola/perl5>.
+
+=back
+
+Examples:
+
+    lola use --lang=perl5 --target=~/src 5.18.1
+    lola p5=5.18.1 ~/src    # Same as above
+
+    lola use --lang=perl5 --shell 5.14.2
+    lola p5=5.14.2
+    lola p5=14.2        # Maximum sugar
+
+    lola use --lang=perl5 --global 5.20.0
+    lola use -g p5=5.20.0
+
+=item C<< lola show [--lang=p5 | --all] [--shell | --target=<dir> | --global] >>
+
+Show info about the version and the pkgset currently in effect, for a language
+(or all languages) or for a target directory.
+
+=back
+
+=head1 Environment Variables
+
+=over
+
+=item C<LOLA_BASE>
+
+This is where the Lola software repository lives. C<$LOLA_BASE/bin> is
+added to the C<PATH> and C<lola-init> is sourced into the shell.
+C<LOLA_BASE> is then defaulted to the repo directory containing the C<lola-
+init> that was sourced.
+
+The suggested place to put the Lola software is in C<~/.lola> but this is in
+no way special to the software (although it may be the base of paths talked
+about in the docs). In fact you can have several Lola installations... the one
+you source C<lola-init> from is the one in charge.
+
+=item C<LOLA_ROOT>
+
+This is the directory under which everything is installed.
+
+    $LOLA_ROOT/perl5
+    $LOLA_ROOT/ruby
+
+Default: C<$LOLA_BASE/root/>
+
+=item C<LOLA_SHIM>
+
+Location of the proxy shims for all executables installed by all languages.
+
+Default: C<$LOLA_BASE/shim/>
+
+=back
+
+=head1 Glossary
+
+=over
+
+=item C<lid>
+
+A language id like C<perl5> (canonical) or C<p5> (shorthand alias)
+
+
+=back
 
 =cut

@@ -89,7 +89,7 @@ and then telling your shell where it is. For example:
 
 Then simply add the C<lib> and C<man> directories to your PATH and MANPATH:
 
-    export PATH=/path/to/lola/lib:"$PATH"
+    export PATH=/path/to/lola/bin:"$PATH"
     export MANPATH=/path/to/lola/man:"$MANPATH"
 
 All your languages and packages get installed in the directory in the

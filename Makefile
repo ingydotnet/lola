@@ -1,8 +1,5 @@
 .PHONY: doc test
 
-EXT_UP_TO_DATE=ext/0.0.2
-PLUGIN_UP_TO_DATE=plugin/0.0.1
-
 default: help
 
 help:
@@ -11,7 +8,7 @@ help:
 	@echo '  test       - Run tests'
 	@echo ''
 
-test: $(EXT_UP_TO_DATE) $(PLUGIN_UP_TO_DATE)
+test:
 	prove $(PROVEOPT) test/
 
 update: doc
